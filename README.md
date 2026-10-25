@@ -106,6 +106,20 @@ It saves the image as `reference.png` beside the scene and adds an `--overlay` f
     <td><sub><b>nautilus</b>: a logarithmic spiral that triples its radius every whorl, sawn through so you look into every chamber. A lamp sweeps the face, the shadows wheel inside the chambers and a glint travels over the nacre.</sub></td>
     <td><sub><b>ammonite</b>: an evolute spiral fossil in a block of limestone, in sepia. A low light circles the face, so the ribs throw their shadows each way in turn and the block's shadow swings over the ground.</sub></td>
   </tr>
+  <tr>
+    <td><img src=".github/assets/kukulcan.webp" alt="An engraving of El Castillo at Chichén Itzá seen from the north-west: nine stepped terraces, the north stair with serpent heads at its foot, and the temple on the platform, in late-afternoon equinox light."></td>
+    <td><img src=".github/assets/chandbaori.webp" alt="An engraving looking down into the Chand Baori stepwell: zigzag flights of steps on the side walls falling to green water, a pavilion of arched galleries and domed balconies at the back, and the rim's shadow across the terraces."></td>
+  </tr>
+  <tr>
+    <td><sub><b>kukulcan</b>: El Castillo on the spring equinox, turned 17° off the compass as it stands. Late in the afternoon the terrace corners cast a sawtooth of light down the north stair's balustrade, the serpent coming down to its carved head, straight from the shadow map.</sub></td>
+    <td><sub><b>chandbaori</b>: the Abhaneri stepwell from its rim, 13 storeys of zigzag steps built down to every tread, falling 20 m to the water. The rim's shadow and each step's own shadow sweep the terraces through a day at 27° N.</sub></td>
+  </tr>
+  <tr>
+    <td colspan="2"><img src=".github/assets/pontdugard.webp" alt="An engraving of the Pont du Gard seen from downstream: three tiers of Roman arches receding over the Gardon, wooded banks on either side, and the arches mirrored in the still river below."></td>
+  </tr>
+  <tr>
+    <td colspan="2"><sub><b>pontdugard</b>: the aqueduct at its real dimensions, 6, 11 and 35 arches in three tiers, 49 m over the Gardon. The sun crosses a summer sky at 43.9° N, each arch's shadow turns and the arches are mirrored in the river.</sub></td>
+  </tr>
 </table>
 
 Every screenshot is the light plate of a page in [`examples/`](examples), captured with the skill's own [`scripts/capture.mjs`](scripts/capture.mjs). Build any example (below) and open its `.html` to see it move.
@@ -146,6 +160,9 @@ Each example is a `scene.mjs` (the model and the surfaces) and a `build.mjs` tha
 | [`nautilus`](examples/nautilus) | A chambered nautilus sawn in half on a bank-note medallion, a lamp sweeping its cut face. The reference for cavities and a second ink for the ground. | `node examples/nautilus/build.mjs` |
 | [`ammonite`](examples/ammonite) | An ammonite in a limestone block under a low light circling round it. The reference for relief on a face and raking light. | `node examples/ammonite/build.mjs` |
 | [`satellite`](examples/satellite) | A geostationary satellite whose wings track the sun through a day over the Earth's limb. The reference for moving parts on a lit body and night-side shading. | `node examples/satellite/build.mjs` |
+| [`kukulcan`](examples/kukulcan) | El Castillo at Chichén Itzá on the spring equinox: nine terraces, four stairs of 91 steps, turned 17° off the compass. Late in the afternoon the terrace corners cast a sawtooth on the north stair's balustrade, and the triangles of light form the serpent coming down to its carved head. The reference for an effect that comes from the shadow map alone. | `node examples/kukulcan/build.mjs` |
+| [`chandbaori`](examples/chandbaori) | The Chand Baori stepwell at Abhaneri seen from its rim: 13 storeys of zigzag steps, built procedurally down to every tread, falling 20 m to green water below a pavilion of galleries and balconies. The rim's shadow and each step's own shadow sweep the terraces through a day at 27° N. The reference for repetitive geometry and exact small shadows. | `node examples/chandbaori/build.mjs` |
+| [`pontdugard`](examples/pontdugard) | The Pont du Gard at its real dimensions, three tiers of 6, 11 and 35 arches receding over the Gardon, mirrored in the river as the sun crosses a summer day at 43.9° N. The reference for a long receding structure, terrain and reflections in water. | `node examples/pontdugard/build.mjs` |
 
 ## How it works
 
@@ -159,7 +176,7 @@ draw-beautiful/
 │   └── plate.mjs       the artboard: guilloche frame, title tablet, paper and plate mark, themes
 ├── references/         craft.md (the engraver's vocabulary), kit.md (API), verify.md (checks)
 ├── scripts/            capture.mjs, drive.mjs, pdf.mjs (headless Chrome), inline.mjs (standalone pages)
-└── examples/           seventeen complete engravings
+└── examples/           twenty complete engravings
 ```
 
 ## Requirements
