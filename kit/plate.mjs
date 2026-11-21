@@ -1,6 +1,7 @@
 // The artboard as an engraved plate: the picture inside a guilloche border with corner rosettes and a lettered
 // title tablet, inked like the picture, printed on a sheet of cream paper inside a plate mark. Nothing else.
 
+import { deflateSync } from "node:zlib";
 import { band, rosette } from "./intaglio.mjs";
 
 const escape = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
@@ -123,3 +124,53 @@ export const printHtml = ({ title, plates, paper = "A4", landscape = false, them
   });
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(title)}</title>${FONTS}<style>${INTAGLIO_CSS}${css}</style></head><body class="intaglio" data-theme="${theme}"><main class="intaglio-print">${sized.join("")}</main></body></html>`;
 };
+
+const CRC = Array.from({ length: 256 }, (_, n) => {
+  let c = n;
+  for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+  return c >>> 0;
+});
+const crc32 = (buf) => {
+  let c = 0xffffffff;
+  for (const b of buf) c = CRC[(c ^ b) & 0xff] ^ (c >>> 8);
+  return (c ^ 0xffffffff) >>> 0;
+};
+const chunk = (type, data) => {
+  const head = Buffer.alloc(8);
+  head.writeUInt32BE(data.length, 0);
+  head.write(type, 4, "ascii");
+  const crc = Buffer.alloc(4);
+  crc.writeUInt32BE(crc32(Buffer.concat([head.subarray(4), data])), 0);
+  return Buffer.concat([head, data, crc]);
+};
+
+/**
+ * A mezzotint's ink levels (`print` or `film` in kit/mezzotint.mjs) as a greyscale PNG data URI, white where the
+ * plate holds ink. A hard dither (only 0 and 255) is stored at 1 bit per cell, film grain at 8.
+ */
+export const levelsPng = (levels, w, h) => {
+  const hard = levels.every((v) => v === 0 || v === 255);
+  const stride = hard ? Math.ceil(w / 8) : w;
+  const raw = Buffer.alloc((stride + 1) * h);
+  for (let y = 0; y < h; y++) {
+    const row = y * (stride + 1) + 1;
+    for (let x = 0; x < w; x++) {
+      const v = levels[y * w + x];
+      if (!hard) raw[row + x] = v;
+      else if (v) raw[row + (x >> 3)] |= 0x80 >> (x & 7);
+    }
+  }
+  const ihdr = Buffer.alloc(13);
+  ihdr.writeUInt32BE(w, 0);
+  ihdr.writeUInt32BE(h, 4);
+  ihdr[8] = hard ? 1 : 8;
+  const png = Buffer.concat([Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]), chunk("IHDR", ihdr), chunk("IDAT", deflateSync(raw, { level: 9 })), chunk("IEND", Buffer.alloc(0))]);
+  return `data:image/png;base64,${png.toString("base64")}`;
+};
+
+/**
+ * A mezzotint's ink for `engravingSvg`'s body: the plate's ink colour shown through its grain, a luminance mask from
+ * `levelsPng`. The ink stays a theme token like the line work's; the live page swaps the image (`data-layer="grain"`).
+ */
+export const grainSvg = ({ width, height, href, id = "mezzotint-grain", ink = "intaglio-ink", layer = "grain" }) =>
+  `<mask id="${id}" maskUnits="userSpaceOnUse" x="0" y="0" width="${width}" height="${height}"><image data-layer="${layer}" href="${href}" width="${width}" height="${height}" preserveAspectRatio="none"/></mask><rect class="${ink}" width="${width}" height="${height}" mask="url(#${id})"/>`;

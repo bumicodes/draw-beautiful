@@ -20,3 +20,14 @@ launch-videos/
 *.mp4
 *.mov
 *.webm
+
+# Reference photos we have no right to redistribute: kept locally for --overlay only
+examples/whaleshark/reference.png
+
+# Not ours to publish: SpaceX Ship 42 scenes, kept locally
+examples/ship42/
+examples/starship/
+
+# Left out of the published skill, kept locally
+examples/giza/
+examples/mona/

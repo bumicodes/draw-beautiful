@@ -554,7 +554,14 @@ export const shadowMap = (solids, light, { size = 768, tris = solids.flatMap((s)
     }
     return sum / count;
   };
-  return { lit };
+  // One texel and no lift off a surface: whether a point in the air is in the light, for marching sunbeams through haze.
+  const seen = (p) => {
+    const [x, y, d] = view(p);
+    const i = Math.floor(x);
+    const j = Math.floor(y);
+    return i < 0 || j < 0 || i >= size || j >= size || d >= buf[j * size + i] - texel ? 1 : 0;
+  };
+  return { lit, seen };
 };
 
 /** Triangles of many solids, flattened once so a live shadow map can reuse them every frame. */

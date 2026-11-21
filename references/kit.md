@@ -32,7 +32,7 @@ Each returns `{ point(u, v) → [p, n], triangles(), mask? }`. Hatch lines run a
 - `occlusion(solids, cam, { ss, halo })`: depth buffer at `ss`× resolution. Returns `sees(p)` (nothing nearer covers p) and `clear(x, y)` (screen px to the nearest solid in `halo`, default all solids). About 0.5 s for a 640 × 460 vignette at ss 3; use ss 2 in the browser.
 - `occ.plus(solids)`: a `sees` that also counts moving parts, rasterised onto a copy of the static buffer (a few ms at ss 2). Hatch moving parts with it so they hide each other and the static parts they pass behind.
 - `hullPath(points)`: the convex hull of screen points as a path `d`. Fill it with class `intaglio-ground` above the static ink and under a moving part to knock out the static lines it covers. See `examples/orrery/`.
-- `shadowMap(solids, light, { size, tris })`: orthographic depth from the light. `lit(p, n)` is 0–1, softened over 4 × 4 texels. Pass `tris: trianglesOf(solids)` once to reuse triangles every frame. 768–1024 for the static render, 512–640 live.
+- `shadowMap(solids, light, { size, tris })`: orthographic depth from the light. `lit(p, n)` is 0–1, softened over 4 × 4 texels; `seen(p)` is one texel with no lift, 0 or 1, for marching sunbeams through haze (`examples/nave/`). Pass `tris: trianglesOf(solids)` once to reuse triangles every frame. 768–1024 for the static render, 512–640 live.
 - `lighting({ light, view, shadow, ambient, bounce, gloss, shine, base })` returns `tone(sample) → 0..1`, 1 being full ink. See the material table in `craft.md`.
 
 ## Lines
@@ -56,6 +56,26 @@ Each returns `{ point(u, v) → [p, n], triangles(), mask? }`. Hatch lines run a
 - `pageHtml({ title, theme, body, script, width })`: a whole page, loading Cormorant Garamond for the title lettering from Google Fonts, with serif fallbacks.
 - `printHtml({ title, plates, paper = "A4", landscape = false, theme = "light", margin = 16, gap = 9 })`: a printable sheet. `plates` are `engravingSvg` strings; each gets an equal share of the sheet inside `margin` mm (stacked in portrait, side by side in landscape) and is sized in mm from its viewBox, inside a hairline plate mark. `paper` is `"A4"`, `"A3"` or `"Letter"`. The `@page` rule sets the paper, so `scripts/pdf.mjs` prints it at true size. No paper grain, shadows or blend modes: Chrome's PDF output rasterises a blended layer into a hard-edged patch. Every id inside the plates (masks, gradients) must be unique on the sheet; the frame's own clip is keyed by plate size.
 - Tokens: `--intaglio-page`, `--intaglio-paper`, `--intaglio-plate`, `--intaglio-mark`, `--intaglio-ink`, `--intaglio-ink-2`, `--intaglio-grain`. Dark is `data-theme="dark"` (pale ink on dark paper), and its scene must ink the negative.
+
+## Mezzotint
+
+`import * as M from "<skill>/kit/mezzotint.mjs"`. Node or browser. The lit model printed in grain; see `examples/temple/`.
+
+- `gbuffer(solids, cam, { res = 1, mesh })`: what each plate cell sees, `res` cells per viewBox px. Each solid is rasterised from its own (u, v) grid, `mesh(solid) → [nu, nv]` cells (default `[1, 1]` for a flat `face`, `[64, 32]` otherwise), with u and v interpolated perspective-correct and `point(u, v)` taken per cell, so masks, creases and silhouettes are exact. Returns `{ w, h, res, id, p, n }`: `id[i]` is the solid's index or -1 for sky, `p` and `n` the point and normal (3 floats per cell). Build it once.
+- `ray(cam, res, x, y)`: the unit direction from the eye through a cell (x, y in cells), for the sky's tone.
+- `heightFog({ eye, density, height, floor, haze, start })`: fog of density `density·exp(-(z - floor) / height)` plus an even `haze`, beginning `start` units from the eye. `through(p, patch = 1)` is the transmittance from the eye to p, `patch` scaling the density (banks); `sky(dir)` the same to infinity. Blend a cell as `tone · t + fog · (1 - t)`.
+- `mirrored(surface, level = 0)`: the surface reflected in the plane z = `level`, for a second `gbuffer` that a still water surface looks up through its ripples (see `examples/torii/`). `heightFog(...).between(a, b)` is the mist on the leg from the water up to what it reflects.
+- `blur(field, w, h, rx, ry)`, `soften(field, w, h, amount, rx, ry)`: an almost-Gaussian blur of a tone field, and the field mixed with it cell by cell (a reflection streaked down the swell with `rx` 0).
+- `bloom(field, w, h, { threshold, r, strength })`: halation; light above `threshold` glows `r` cells into the dark.
+- `shafts(field, w, h, { x, y, threshold, strength, samples, reach, decay })`: crepuscular rays, light near the source at cell (x, y) smeared toward it, so beams fan out through the gaps of whatever stands against it. Keep `threshold` high (0.8) so only the sun's core feeds them; a low one washes the sky instead of making beams (see `examples/moai/`).
+- Apply these to the tone before `film`: blurring the grain itself only makes mush.
+- `grain(w, h, { seed, clump = 0.4, size = 2.5, soft = 0 })`: a fixed value per cell, spread evenly over [0, 1) so a tone t prints t of the cells. `clump` mixes in value noise `size` cells across; `soft` (0..1, about 0.4) rounds the specks into film grain.
+- `film(tone, grain, { amount = 0.6, floor = 0.2 })`: ink levels 0..255, the tone swung by up to ±`amount`/2 of grain, scaled by `floor + (1 - floor)·4t(1 - t)` so the mid-tones carry most of it. The default.
+- `print(tone, grain)`: ink levels 0..255 as a hard dither, every cell 255 or 0.
+- `rgba(levels)`: white-on-black RGBA pixels for a canvas `ImageData` (the live page's mask).
+- `hash(i, j, seed)`, `noise(x, y, seed)`, `fbm(x, y, { octaves, seed })`: integer hash, value noise and fractal noise in [0, 1), for grit, stone and fog banks.
+
+In `kit/plate.mjs` (Node only): `levelsPng(levels, w, h)` gives a greyscale PNG data URI of the ink levels (1 bit per cell for a hard dither, 8 otherwise), and `grainSvg({ width, height, href, id, ink = "intaglio-ink", layer = "grain" })` the body for `engravingSvg`: a `rect` of class `ink` seen through a luminance mask whose `<image data-layer="grain">` the live page swaps. For a colour mezzotint stack one per plate, each with its own `id`, `ink` class and `layer` (`examples/bridge/`: the key plate and an orange plate for the bridge).
 
 ## The scene module pattern
 

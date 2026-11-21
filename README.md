@@ -49,7 +49,10 @@ Describe the thing, where it stands and what moves. The skill picks the size, th
 /draw-beautiful a nautilus shell cut in half to show its chambers, lit from the upper left
 /draw-beautiful the Eiffel Tower from the Champ de Mars, the sun crossing a summer sky
 /draw-beautiful a steam locomotive on a viaduct, its wheels turning, as a bank-note vignette
+/draw-beautiful a ruined abbey in morning fog as a mezzotint
 ```
+
+Say "engraved" or "mezzotint" (or aquatint, grain, foggy) to pick the style. If you name neither, the skill asks which one you want.
 
 ### From a reference image
 
@@ -64,6 +67,8 @@ Give it a photograph, drawing or postcard and it fits the camera and the proport
 It saves the image as `reference.png` beside the scene and adds an `--overlay` flag to the build, which draws the photo under the art so you can check that they line up (see [`madras`](examples/madras)).
 
 ## Gallery
+
+### Engraving
 
 <table>
   <tr>
@@ -124,6 +129,59 @@ It saves the image as `reference.png` beside the scene and adds an `--overlay` f
 
 Every screenshot is the light plate of a page in [`examples/`](examples), captured with the skill's own [`scripts/capture.mjs`](scripts/capture.mjs). Build any example (below) and open its `.html` to see it move.
 
+### Mezzotint
+
+The same lit 3D model printed in grain instead of lines: tone is the density of the grain, height fog swallows the ground, and the light moves while the grain holds still. These are shown without the plate's frame.
+
+<table>
+  <tr>
+    <td width="50%"><img src=".github/assets/temple.webp" alt="A mezzotint of a Doric temple on a stony plain: the colonnade rises pale out of a bank of ground fog under a grey sky, its steps lost in the mist, a lone figure standing in the dark field below, everything made of fine grain."></td>
+    <td width="50%"><img src=".github/assets/torii.webp" alt="A mezzotint of a torii standing in a still bay at dawn: mist lies on the water, the gate's reflection fades into the haze below it, and the sun rises over misty ridges with a glitter path on the water."></td>
+  </tr>
+  <tr>
+    <td><sub><b>temple</b>: an 8 × 17 Doric temple whose base sinks into height fog over dark, gritty ground, as the sun crosses Athens' sky.</sub></td>
+    <td><sub><b>torii</b>: the water is a true mirror, a second G-buffer seen from below, and the reflection fades through the mist twice. The sun comes up behind the ridges and lays a glitter path across the bay.</sub></td>
+  </tr>
+  <tr>
+    <td><img src=".github/assets/bridge.webp" alt="A two-colour mezzotint of the Golden Gate Bridge from the Marin headlands: the orange towers and cables stand clear while the deck runs into a sea of fog, a dark headland in the foreground."></td>
+    <td><img src=".github/assets/moai.webp" alt="A mezzotint of the fifteen moai of Ahu Tongariki in a row on their platform, silhouetted against the rising sun, which breaks between two of the statues."></td>
+  </tr>
+  <tr>
+    <td><sub><b>bridge</b>: the Golden Gate at its real size in two inks, its deck running into a billowed sea of summer fog while the towers stand clear. The light swings from a morning silhouette to an evening glow.</sub></td>
+    <td><sub><b>moai</b>: Ahu Tongariki at the solstice sunrise. The sun breaks between the statues, and crepuscular rays and long shadows reach across the grass.</sub></td>
+  </tr>
+  <tr>
+    <td><img src=".github/assets/nave.webp" alt="A mezzotint of the nave of a Gothic cathedral from the west end: dark piers recede into haze toward the far windows, shafts of sunlight slant across the air from the clerestory, and patches of sun lie on the floor."></td>
+    <td><img src=".github/assets/pantheon.webp" alt="A mezzotint of the Pantheon's rotunda seen from the floor: rings of coffers rise into the dark round the bright oculus, and one beam of sunlight falls through the haze onto the wall."></td>
+  </tr>
+  <tr>
+    <td><sub><b>nave</b>: a High Gothic nave at Chartres' latitude in late October. The beams through the haze are shaped by every window's tracery, wall depth and stained-glass panes, and slide over the floor and up the piers as the sun moves.</sub></td>
+    <td><sub><b>pantheon</b>: the rotunda on 21 April, five rings of coffers rising into the dark round the oculus. One beam of sun crosses the haze, and its disc travels over the dome through the day.</sub></td>
+  </tr>
+  <tr>
+    <td><img src=".github/assets/mont.webp" alt="A mezzotint of Mont-Saint-Michel at high tide across the bay: the island's village, ramparts and abbey with its spire, mirrored in still water, mist lying on the water at the ramparts' feet."></td>
+    <td><img src=".github/assets/abbey.webp" alt="A mezzotint of the ruined west front of an abbey in fog, one tall pointed window open to the sky, the wall's shadow and the beam through the window standing in the mist over a grassy meadow."></td>
+  </tr>
+  <tr>
+    <td><sub><b>mont</b>: Mont-Saint-Michel at a spring high tide, mirrored in the bay. Mist on the water swallows the ramparts' feet while the spire stands clear.</sub></td>
+    <td><sub><b>abbey</b>: a Cistercian west front after Tintern on a midsummer morning. Its shadow and the beam through its empty window stand in the fog, and a pointed patch of sun walks across the meadow.</sub></td>
+  </tr>
+  <tr>
+    <td><img src=".github/assets/blackhole.webp" alt="A mezzotint of a black hole: the dark shadow ringed by its accretion disk, the far side of the disk bent up over and under the shadow by gravity, one side brighter than the other."></td>
+    <td><img src=".github/assets/ranges.webp" alt="A mezzotint of the Alps, range behind range with fog in the valleys between them, the snowy summits catching the last of the evening sun under a dark sky."></td>
+  </tr>
+  <tr>
+    <td><sub><b>blackhole</b>: a Schwarzschild black hole, every cell a photon traced along its true bent path. The far side of the disk is lensed over and under the shadow, and the gas is Doppler-boosted and shears as it orbits. After Jean-Pierre Luminet's hand-dotted 1979 image, the first picture of a black hole.</sub></td>
+    <td><sub><b>ranges</b>: the Alps one range behind another, grown from ridged multifractal noise, with fog in the valleys between them. As the evening sun sinks the shadows climb the faces until only the summits keep the light.</sub></td>
+  </tr>
+  <tr>
+    <td><img src=".github/assets/whaleshark.webp" alt="A mezzotint of a whale shark seen from above in dark water, its pale spots standing clear on the head and shoulders while the tail fades down into the dark."></td>
+  </tr>
+  <tr>
+    <td><sub><b>whaleshark</b>: a 10.5 m whale shark seen from above, drawn to the proportions of a reference photo. Sunlight comes down through the surface in a net of caustics that drifts over its back, and the water swallows it with depth.</sub></td>
+  </tr>
+</table>
+
 ## What it makes
 
 | Size | What it is | Example |
@@ -159,6 +217,17 @@ Each example is a `scene.mjs` (the model and the surfaces) and a `build.mjs` tha
 | [`lighthouse`](examples/lighthouse) | A lighthouse on a rock at night, its two beams thinning every line they pass in front of. The reference for night plates and light in the air. | `node examples/lighthouse/build.mjs` |
 | [`nautilus`](examples/nautilus) | A chambered nautilus sawn in half on a bank-note medallion, a lamp sweeping its cut face. The reference for cavities and a second ink for the ground. | `node examples/nautilus/build.mjs` |
 | [`ammonite`](examples/ammonite) | An ammonite in a limestone block under a low light circling round it. The reference for relief on a face and raking light. | `node examples/ammonite/build.mjs` |
+| [`temple`](examples/temple) | A Doric temple in ground fog on a stony plain, printed as a mezzotint: grain instead of lines, height fog, the sun crossing Athens' sky. The reference for the mezzotint mode. | `node examples/temple/build.mjs` |
+| [`bridge`](examples/bridge) | The Golden Gate Bridge at its real size seen from the Marin headlands, its deck running into a billowed sea of summer fog while the towers stand clear; a mezzotint whose light swings from morning silhouette to evening glow. | `node examples/bridge/build.mjs` |
+| [`torii`](examples/torii) | A torii standing in a still bay at dawn, mezzotint: the water a true mirror (a second, reflected G-buffer), the reflection fading through the mist twice, a glitter path, bloom. | `node examples/torii/build.mjs` |
+| [`moai`](examples/moai) | The fifteen moai of Ahu Tongariki at the solstice sunrise, mezzotint: the sun breaking between the statues, crepuscular rays and long shadows across the grass. | `node examples/moai/build.mjs` |
+| [`nave`](examples/nave) | The nave of a High Gothic cathedral at Chartres' latitude in late October, mezzotint: sunbeams marched through drifting haze, shaped by every window's tracery, wall depth and stained-glass panes, crossing the nave and sliding over the floor and up the piers as the sun moves. | `node examples/nave/build.mjs` |
+| [`abbey`](examples/abbey) | The ruined west front of a Cistercian abbey after Tintern, mezzotint: the wall in shade against a midsummer morning, its shadow and the beam through its empty window standing in the fog while a pointed patch of sun walks across the meadow. | `node examples/abbey/build.mjs` |
+| [`pantheon`](examples/pantheon) | The rotunda of the Pantheon seen from the floor on 21 April, mezzotint: five rings of coffers rising into the dark round the oculus, one beam of sun through the haze, its disc crossing the dome through the day. | `node examples/pantheon/build.mjs` |
+| [`mont`](examples/mont) | Mont-Saint-Michel at a spring high tide seen across the bay, mezzotint: village, ramparts and abbey mirrored in still water, mist on the water swallowing the ramparts' feet while the spire stands clear. | `node examples/mont/build.mjs` |
+| [`blackhole`](examples/blackhole) | A Schwarzschild black hole and its accretion disk, mezzotint: every cell a photon traced along its true bent path, the far side of the disk lensed over and under the shadow, the gas Doppler-boosted and shearing as it orbits, after Jean-Pierre Luminet's 1979 image. | `node examples/blackhole/build.mjs` |
+| [`ranges`](examples/ranges) | Range behind range of the Alps from a ridged-multifractal heightfield, mezzotint: snowfields above the snowline, fog in the valleys, the evening sun sinking until only the summits keep the light. The reference for landscape from noise. | `node examples/ranges/build.mjs` |
+| [`whaleshark`](examples/whaleshark) | A whale shark seen from above in dark water, fitted to a reference photo (kept local, not in the repo), mezzotint: caustics drifting over its back, the water swallowing it with depth. `--bare` drops the frame. | `node examples/whaleshark/build.mjs` |
 | [`satellite`](examples/satellite) | A geostationary satellite whose wings track the sun through a day over the Earth's limb. The reference for moving parts on a lit body and night-side shading. | `node examples/satellite/build.mjs` |
 | [`kukulcan`](examples/kukulcan) | El Castillo at Chichén Itzá on the spring equinox: nine terraces, four stairs of 91 steps, turned 17° off the compass. Late in the afternoon the terrace corners cast a sawtooth on the north stair's balustrade, and the triangles of light form the serpent coming down to its carved head. The reference for an effect that comes from the shadow map alone. | `node examples/kukulcan/build.mjs` |
 | [`chandbaori`](examples/chandbaori) | The Chand Baori stepwell at Abhaneri seen from its rim: 13 storeys of zigzag steps, built procedurally down to every tread, falling 20 m to green water below a pavilion of galleries and balconies. The rim's shadow and each step's own shadow sweep the terraces through a day at 27° N. The reference for repetitive geometry and exact small shadows. | `node examples/chandbaori/build.mjs` |
@@ -173,10 +242,11 @@ draw-beautiful/
 ├── SKILL.md            the instructions Claude follows
 ├── kit/
 │   ├── intaglio.mjs    the engine: camera, surfaces, occlusion, shadows, hatching, ink, guilloche
+│   ├── mezzotint.mjs   grain instead of lines: G-buffer, height fog, film grain
 │   └── plate.mjs       the artboard: guilloche frame, title tablet, paper and plate mark, themes
 ├── references/         craft.md (the engraver's vocabulary), kit.md (API), verify.md (checks)
 ├── scripts/            capture.mjs, drive.mjs, pdf.mjs (headless Chrome), inline.mjs (standalone pages)
-└── examples/           twenty complete engravings
+└── examples/           thirty-one complete plates
 ```
 
 ## Requirements

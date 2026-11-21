@@ -1,6 +1,6 @@
 ---
 name: draw-beautiful
-description: Draw beautiful intaglio artwork as SVG, the look of a bank-note vignette, a copperplate engraving or an etching, where every tone is made of swelling burin lines, contour hatching that follows the form, cross-hatching in the darks, ruled skies and guilloche. Builds a real object in 3D, lights it, casts true shadows and engraves it into filled line ribbons, framed as an engraved plate (guilloche border, a lettered title tablet, plate mark), with calm motion (a moving sun, a turning part). Use whenever someone wants an engraved, etched, intaglio, steel-plate, bank-note, currency, stamp, woodcut-like, line-art "money style" or "old book plate" illustration, an engraved hero image or explanatory figure, or asks for the /anatomy kind of figure drawn as an engraving instead of flat isometric shading. Framework-free (Node build that writes SVG and HTML), drops into React or any site.
+description: Draw beautiful intaglio artwork as SVG, the look of a bank-note vignette, a copperplate engraving or an etching, where every tone is made of swelling burin lines, contour hatching that follows the form, cross-hatching in the darks, ruled skies and guilloche. Builds a real object in 3D, lights it, casts true shadows and engraves it into filled line ribbons, framed as an engraved plate (guilloche border, a lettered title tablet, plate mark), with calm motion (a moving sun, a turning part). Use whenever someone wants an engraved, etched, intaglio, steel-plate, bank-note, currency, stamp, woodcut-like, line-art "money style" or "old book plate" illustration, an engraved hero image or explanatory figure, or asks for the /anatomy kind of figure drawn as an engraving instead of flat isometric shading. Framework-free (Node build that writes SVG and HTML), drops into React or any site. Also prints the same lit model as a mezzotint or aquatint, tone made of grain instead of lines, with height fog that swallows the ground (the grainy, misty, monochrome "photogravure" or "film grain" look), when someone asks for a mezzotint, aquatint, stipple, grain, noise-dithered or foggy grainy picture.
 ---
 
 # Draw beautiful
@@ -18,6 +18,15 @@ Four complete examples ship. `examples/orrery/` is a machine that explains itsel
 - **Contour hatching.** Each surface's lines run along its own parameter, so they curve with the form. Choose the direction like an engraver would: rings round anything turned, courses along the long edge of a stone, parallels round a ball, the grain of wood along its length.
 - **Swelling lines.** Width follows tone, is capped at a share of the gap to the next line (darks never close up into a blob, and lines that crowd at a limb thin by themselves), and ramps to a point where the tone fades. No line ends blunt in the middle of a lit surface.
 - **True shadows.** A cast shadow is hatched with the same lines as the surface it falls on, only thicker and crossed. It is where the explanation usually lives (the sundial's whole point is its shadow).
+
+## Choose the style
+
+The same lit model prints two ways, and the choice changes most of what follows, so settle it before any work.
+
+- **Engraving** (the default): tone in swelling burin lines, contour hatching, cross-hatching in the darks, a ruled sky. Bank notes, stamps, book plates, explanatory figures. Follow "Workflow" below.
+- **Mezzotint**: tone in fine grain, height fog swallowing the ground, forms coming out of the dark. A misty photogravure. Follow "Workflow" up to the camera and light, then "Mezzotint" below.
+
+If the request already names or shows the style, use it without asking: engraved, etched, intaglio, line art, bank-note, stamp or woodcut means engraving; mezzotint, aquatint, stipple, grain, film grain, foggy or photogravure means mezzotint. A sheet (a bank-note layout) is always engraved. Otherwise ask once, before building anything, with a one-line description of each style (use the AskUserQuestion tool when it is available, plain text when not), and recommend the one that suits the subject: engraving for machines, objects and figures that explain, mezzotint for landscapes, architecture in atmosphere and anything that wants fog. If there is no answer, engrave.
 
 ## Workflow
 
@@ -52,12 +61,26 @@ When the person gives a photograph, drawing or postcard of the thing, build the 
 7. **Take the light from the photo.** Find which faces are lit and where the shadows fall, orient the model's compass to match, and pick the start hour that reproduces it. The tour then moves the sun away from the photo's moment and back.
 8. **Engrave, don't trace.** Never copy the photo's tones into the ink. Lit faces stay nearly bare even where the photo shows texture, dark material is a `base` on the material, and what the photo hides (behind trees, out of frame) is either built plainly or faded into the paper.
 
+## Mezzotint
+
+When someone asks for a mezzotint, an aquatint, a stipple or grain picture, or shows the look (a monochrome scene made of fine speckle, fog swallowing the ground, forms coming out of the dark), the same 3D model is printed in grain instead of engraved. A mezzotint plate is pitted all over and the engraver burnishes the lights out of the black; an aquatint holds tone in resin dust. Either way tone is how many tiny pits print, not how wide a line is. `examples/temple/` is the worked case: a Doric temple of 8 × 17 columns standing in ground fog on a stony plain, a lone figure in the field, the sun crossing Athens' sky (`node examples/temple/build.mjs`, `--dark` for the negative plate).
+
+- **The G-buffer.** `M.gbuffer(solids, cam, { res, mesh })` from `kit/mezzotint.mjs` rasterises every solid from its own (u, v) grid and takes the surface's exact point and normal per cell, so masks, creases and silhouettes are exact. `res` 2 (two cells per viewBox px) gives a grain like a photogravure's; 1 is coarse. A perspective camera suits it: a plain running to a horizon is what fog is for.
+- **Everything fixed, once.** Per cell, in `scene()`: the material, any grit (`M.fbm` in world space for gravel and stone), the fog's transmittance and the sky's tone. Only `lighting` and `shadowMap` run per frame, and only on cells the fog leaves visible. Skip the shadow lookup on cells no caster can reach.
+- **Fog is the composition.** `M.heightFog({ eye, density, height, haze, start })`: thick on the ground, thinning upward, clear for the first `start` units so the foreground stays dark and crisp. Tune it so the subject's base goes under and its top stands clear. Mottle the density with a slow `fbm` (`through(p, bank)`) so it lies in banks. Fog is paper (tone near 0); the sky is a grey gradient, darker overhead, that only fades into the fog over its last few degrees, or the subject's pale top has nothing to stand against.
+- **Values, not lines.** Pale stone needs high ambient (0.4+) and the sun on the faces the camera sees: pick the start hour from the model, not by eye. Push what sits behind a colonnade into gloom (a darker material) so pale shafts read against it. Dark ground with grit makes the white specks that give the look its sparkle.
+- **The grain.** `M.grain(w, h, { clump, size })` is a fixed field per cell, rank-equalised over [0, 1); `clump` 0.2–0.35 gathers the pits like resin dust. The grain never moves, so a moving sun changes only the tone and the plate holds still.
+- **Film grain, not a hard dither.** `M.film(tone, grain, { amount })` keeps the tone continuous and swings it by the grain, most in the mid-tones: fog and sky stay smooth gradients, small parts (capitals, a distant figure) keep their shape, and the grain sparkles where the tone turns. That is the look people mean by a grainy, misty photograph. `M.print(tone, grain)` prints every cell as ink or paper, a true mezzotint dither, but at plate scale it reads as loose dots and loses small forms; blurring it only makes mush. Use `film` unless a hard dither is asked for (`--dither` on the temple).
+- **The plate.** `grainSvg({ width, height, href: levelsPng(levels, w, h) })` from `kit/plate.mjs` is the body for `engravingSvg`: the ink colour shown through a greyscale PNG mask, so it follows the theme and the frame stays engraved. A 760 × 428 plate at `res` 2 is about 1.7 MB with film grain (noise doesn't compress) and 400 KB dithered. Live, a worker prints each frame to an `OffscreenCanvas` and sends a PNG blob that the page swaps into the mask (`examples/temple/build.mjs`). The temple re-prints about 8–10 times a second; keep the tour slow.
+- **Dark theme.** Ink `1 - tone`: pale fog on dark paper, as with line work.
+
 ## Setup
 
 | File | Use it for |
 |---|---|
 | `kit/intaglio.mjs` | The engine, isomorphic (Node and browser): vectors, camera, surfaces (`patch`, `sheet`, `sphere`, `lathe`, `face`, `disc`, `rings`, `prism`, `box`), `occlusion` (with `plus` for moving parts), `hullPath`, `shadowMap`, `lighting`, `hatch`, `ruling`, `ink`, `stroke`, `circle`, `silhouette`, `outline` and `dither`, guilloche `rosette` and `band`. API in `references/kit.md`. |
-| `kit/plate.mjs` | The artboard: `engravingSvg` (with an engraved guilloche frame and lettered tablets), `plateHtml` (paper sheet and plate mark), `pageHtml`, `printHtml` (one or more plates on an A4, A3 or Letter sheet for print), `INTAGLIO_CSS`, and the light and dark themes. |
+| `kit/plate.mjs` | The artboard: `engravingSvg` (with an engraved guilloche frame and lettered tablets), `plateHtml` (paper sheet and plate mark), `pageHtml`, `printHtml` (one or more plates on an A4, A3 or Letter sheet for print), `INTAGLIO_CSS`, and the light and dark themes. For a mezzotint, `levelsPng` and `grainSvg`. |
+| `kit/mezzotint.mjs` | Grain instead of lines, isomorphic: `gbuffer` (each cell's surface, point and normal), `ray`, `heightFog`, `grain`, `film`, `print`, `rgba`, and `hash`, `noise`, `fbm`. API in `references/kit.md`. |
 | `scripts/live.mjs` | `liveScript({ kit, scene, start, min, max, idle, ... })`: the live loop for a plate driven by one value. A worker builds the scene and answers `inkAt(S, v)`; the page eases, tours, follows pointer and keys, and swaps `[data-layer]` paths. `wrapAround` for angles; `quantize: n` caches frames when the geometry itself is rebuilt each frame. |
 | `scripts/inline.mjs` | `wrap(path, name)` inlines a module as `const name = (() => {...})()` for a standalone page. Modules that import the kit must use `import * as I`. |
 | `scripts/capture.mjs` | Headless Chrome screenshots and close-ups (`--zoom x,y,w,h`, `--reduced`, `--width 390`). |
@@ -72,7 +95,7 @@ Paths: a standalone page is a `build.mjs` that imports `scene.mjs`, renders the 
 
 `references/craft.md` has the reasons and the recipes.
 
-- **Only lines.** No grey fills, gradients, blur or opacity tricks for tone. Paper is the only white, ink the only dark. A second ink (`intaglio-ink-2`) only when colour is the subject.
+- **Only lines.** No grey fills, gradients, blur or opacity tricks for tone. Paper is the only white, ink the only dark. A second ink (`intaglio-ink-2`) only when colour is the subject. A mezzotint replaces lines with grain: tone is ink seen through the grain, never a flat grey fill.
 - **Lines follow the form.** Choose each surface's `along` deliberately. Straight lines on a curved body or rings on a flat face read as wallpaper.
 - **Mostly paper.** The lit side is nearly bare. If the whole figure is grey at arm's length, raise `from` on the primary layers before anything else.
 - **Darks never close.** Keep `fill` at 0.6–0.75 so even the blackest shadow shows paper between lines. A solid black patch is a printing fault.
