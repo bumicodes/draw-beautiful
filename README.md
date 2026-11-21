@@ -68,6 +68,61 @@ It saves the image as `reference.png` beside the scene and adds an `--overlay` f
 
 ## Gallery
 
+### Mezzotint
+
+The same lit 3D model printed in grain instead of lines: tone is the density of the grain, height fog swallows the ground, and the light moves while the grain holds still. These are shown without the plate's frame.
+
+<table>
+  <tr>
+    <td width="50%"><img src=".github/assets/temple.webp" alt="A mezzotint of a Doric temple on a stony plain: the colonnade rises pale out of a bank of ground fog under a grey sky, its steps lost in the mist, a lone figure standing in the dark field below, everything made of fine grain."></td>
+    <td width="50%"><img src=".github/assets/torii.webp" alt="A mezzotint of a torii standing in a still bay at dawn: mist lies on the water, the gate's reflection fades into the haze below it, and the sun rises over misty ridges with a glitter path on the water."></td>
+  </tr>
+  <tr>
+    <td><sub><b>temple</b>: an 8 × 17 Doric temple whose base sinks into height fog over dark, gritty ground, as the sun crosses Athens' sky.</sub></td>
+    <td><sub><b>torii</b>: the water is a true mirror, a second G-buffer seen from below, and the reflection fades through the mist twice. The sun comes up behind the ridges and lays a glitter path across the bay.</sub></td>
+  </tr>
+  <tr>
+    <td><img src=".github/assets/bridge.webp" alt="A two-colour mezzotint of the Golden Gate Bridge from the Marin headlands: the orange towers and cables stand clear while the deck runs into a sea of fog, a dark headland in the foreground."></td>
+    <td><img src=".github/assets/moai.webp" alt="A mezzotint of the fifteen moai of Ahu Tongariki in a row on their platform, silhouetted against the rising sun, which breaks between two of the statues."></td>
+  </tr>
+  <tr>
+    <td><sub><b>bridge</b>: the Golden Gate at its real size in two inks, its deck running into a billowed sea of summer fog while the towers stand clear. The light swings from a morning silhouette to an evening glow.</sub></td>
+    <td><sub><b>moai</b>: Ahu Tongariki at the solstice sunrise. The sun breaks between the statues, and crepuscular rays and long shadows reach across the grass.</sub></td>
+  </tr>
+  <tr>
+    <td><img src=".github/assets/nave.webp" alt="A mezzotint of the nave of a Gothic cathedral from the west end: dark piers recede into haze toward the far windows, shafts of sunlight slant across the air from the clerestory, and patches of sun lie on the floor."></td>
+    <td><img src=".github/assets/pantheon.webp" alt="A mezzotint of the Pantheon's rotunda seen from the floor: rings of coffers rise into the dark round the bright oculus, and one beam of sunlight falls through the haze onto the wall."></td>
+  </tr>
+  <tr>
+    <td><sub><b>nave</b>: a High Gothic nave at Chartres' latitude in late October. The beams through the haze are shaped by every window's tracery, wall depth and stained-glass panes, and slide over the floor and up the piers as the sun moves.</sub></td>
+    <td><sub><b>pantheon</b>: the rotunda on 21 April, five rings of coffers rising into the dark round the oculus. One beam of sun crosses the haze, and its disc travels over the dome through the day.</sub></td>
+  </tr>
+  <tr>
+    <td><img src=".github/assets/mont.webp" alt="A mezzotint of Mont-Saint-Michel at high tide across the bay: the island's village, ramparts and abbey with its spire, mirrored in still water, mist lying on the water at the ramparts' feet."></td>
+    <td><img src=".github/assets/abbey.webp" alt="A mezzotint of the ruined west front of an abbey in fog, one tall pointed window open to the sky, the wall's shadow and the beam through the window standing in the mist over a grassy meadow."></td>
+  </tr>
+  <tr>
+    <td><sub><b>mont</b>: Mont-Saint-Michel at a spring high tide, mirrored in the bay. Mist on the water swallows the ramparts' feet while the spire stands clear.</sub></td>
+    <td><sub><b>abbey</b>: a Cistercian west front after Tintern on a midsummer morning. Its shadow and the beam through its empty window stand in the fog, and a pointed patch of sun walks across the meadow.</sub></td>
+  </tr>
+  <tr>
+    <td><img src=".github/assets/blackhole.webp" alt="A mezzotint of a black hole: the dark shadow ringed by its accretion disk, the far side of the disk bent up over and under the shadow by gravity, one side brighter than the other."></td>
+    <td><img src=".github/assets/ranges.webp" alt="A mezzotint of the Alps, range behind range with fog in the valleys between them, the snowy summits catching the last of the evening sun under a dark sky."></td>
+  </tr>
+  <tr>
+    <td><sub><b>blackhole</b>: a Schwarzschild black hole, every cell a photon traced along its true bent path. The far side of the disk is lensed over and under the shadow, and the gas is Doppler-boosted and shears as it orbits. After Jean-Pierre Luminet's hand-dotted 1979 image, the first picture of a black hole.</sub></td>
+    <td><sub><b>ranges</b>: the Alps one range behind another, grown from ridged multifractal noise, with fog in the valleys between them. As the evening sun sinks the shadows climb the faces until only the summits keep the light.</sub></td>
+  </tr>
+  <tr>
+    <td><img src=".github/assets/whaleshark.webp" alt="A mezzotint of a whale shark seen from above in dark water, its pale spots standing clear on the head and shoulders while the tail fades down into the dark."></td>
+    <td><img src=".github/assets/ship42.webp" alt="A mezzotint of the nose of Starship's Ship 42 close up under an overcast sky: black hexagonal heat-shield tiles, a strip of bare stainless steel down one side, the forward flap folded along the hull."></td>
+  </tr>
+  <tr>
+    <td><sub><b>whaleshark</b>: a 10.5 m whale shark seen from above, drawn to the proportions of a reference photo. Sunlight comes down through the surface in a net of caustics that drifts over its back, and the water swallows it with depth.</sub></td>
+    <td><sub><b>ship42</b>: the nose of Starship's Ship 42, every tile edge, flap and port traced off a photo and cast back onto the 3D hull. The light swings round the nose, so the tiles, the steel and the flap trade light and shade.</sub></td>
+  </tr>
+</table>
+
 ### Engraving
 
 <table>
@@ -129,59 +184,6 @@ It saves the image as `reference.png` beside the scene and adds an `--overlay` f
 
 Every screenshot is the light plate of a page in [`examples/`](examples), captured with the skill's own [`scripts/capture.mjs`](scripts/capture.mjs). Build any example (below) and open its `.html` to see it move.
 
-### Mezzotint
-
-The same lit 3D model printed in grain instead of lines: tone is the density of the grain, height fog swallows the ground, and the light moves while the grain holds still. These are shown without the plate's frame.
-
-<table>
-  <tr>
-    <td width="50%"><img src=".github/assets/temple.webp" alt="A mezzotint of a Doric temple on a stony plain: the colonnade rises pale out of a bank of ground fog under a grey sky, its steps lost in the mist, a lone figure standing in the dark field below, everything made of fine grain."></td>
-    <td width="50%"><img src=".github/assets/torii.webp" alt="A mezzotint of a torii standing in a still bay at dawn: mist lies on the water, the gate's reflection fades into the haze below it, and the sun rises over misty ridges with a glitter path on the water."></td>
-  </tr>
-  <tr>
-    <td><sub><b>temple</b>: an 8 × 17 Doric temple whose base sinks into height fog over dark, gritty ground, as the sun crosses Athens' sky.</sub></td>
-    <td><sub><b>torii</b>: the water is a true mirror, a second G-buffer seen from below, and the reflection fades through the mist twice. The sun comes up behind the ridges and lays a glitter path across the bay.</sub></td>
-  </tr>
-  <tr>
-    <td><img src=".github/assets/bridge.webp" alt="A two-colour mezzotint of the Golden Gate Bridge from the Marin headlands: the orange towers and cables stand clear while the deck runs into a sea of fog, a dark headland in the foreground."></td>
-    <td><img src=".github/assets/moai.webp" alt="A mezzotint of the fifteen moai of Ahu Tongariki in a row on their platform, silhouetted against the rising sun, which breaks between two of the statues."></td>
-  </tr>
-  <tr>
-    <td><sub><b>bridge</b>: the Golden Gate at its real size in two inks, its deck running into a billowed sea of summer fog while the towers stand clear. The light swings from a morning silhouette to an evening glow.</sub></td>
-    <td><sub><b>moai</b>: Ahu Tongariki at the solstice sunrise. The sun breaks between the statues, and crepuscular rays and long shadows reach across the grass.</sub></td>
-  </tr>
-  <tr>
-    <td><img src=".github/assets/nave.webp" alt="A mezzotint of the nave of a Gothic cathedral from the west end: dark piers recede into haze toward the far windows, shafts of sunlight slant across the air from the clerestory, and patches of sun lie on the floor."></td>
-    <td><img src=".github/assets/pantheon.webp" alt="A mezzotint of the Pantheon's rotunda seen from the floor: rings of coffers rise into the dark round the bright oculus, and one beam of sunlight falls through the haze onto the wall."></td>
-  </tr>
-  <tr>
-    <td><sub><b>nave</b>: a High Gothic nave at Chartres' latitude in late October. The beams through the haze are shaped by every window's tracery, wall depth and stained-glass panes, and slide over the floor and up the piers as the sun moves.</sub></td>
-    <td><sub><b>pantheon</b>: the rotunda on 21 April, five rings of coffers rising into the dark round the oculus. One beam of sun crosses the haze, and its disc travels over the dome through the day.</sub></td>
-  </tr>
-  <tr>
-    <td><img src=".github/assets/mont.webp" alt="A mezzotint of Mont-Saint-Michel at high tide across the bay: the island's village, ramparts and abbey with its spire, mirrored in still water, mist lying on the water at the ramparts' feet."></td>
-    <td><img src=".github/assets/abbey.webp" alt="A mezzotint of the ruined west front of an abbey in fog, one tall pointed window open to the sky, the wall's shadow and the beam through the window standing in the mist over a grassy meadow."></td>
-  </tr>
-  <tr>
-    <td><sub><b>mont</b>: Mont-Saint-Michel at a spring high tide, mirrored in the bay. Mist on the water swallows the ramparts' feet while the spire stands clear.</sub></td>
-    <td><sub><b>abbey</b>: a Cistercian west front after Tintern on a midsummer morning. Its shadow and the beam through its empty window stand in the fog, and a pointed patch of sun walks across the meadow.</sub></td>
-  </tr>
-  <tr>
-    <td><img src=".github/assets/blackhole.webp" alt="A mezzotint of a black hole: the dark shadow ringed by its accretion disk, the far side of the disk bent up over and under the shadow by gravity, one side brighter than the other."></td>
-    <td><img src=".github/assets/ranges.webp" alt="A mezzotint of the Alps, range behind range with fog in the valleys between them, the snowy summits catching the last of the evening sun under a dark sky."></td>
-  </tr>
-  <tr>
-    <td><sub><b>blackhole</b>: a Schwarzschild black hole, every cell a photon traced along its true bent path. The far side of the disk is lensed over and under the shadow, and the gas is Doppler-boosted and shears as it orbits. After Jean-Pierre Luminet's hand-dotted 1979 image, the first picture of a black hole.</sub></td>
-    <td><sub><b>ranges</b>: the Alps one range behind another, grown from ridged multifractal noise, with fog in the valleys between them. As the evening sun sinks the shadows climb the faces until only the summits keep the light.</sub></td>
-  </tr>
-  <tr>
-    <td><img src=".github/assets/whaleshark.webp" alt="A mezzotint of a whale shark seen from above in dark water, its pale spots standing clear on the head and shoulders while the tail fades down into the dark."></td>
-  </tr>
-  <tr>
-    <td><sub><b>whaleshark</b>: a 10.5 m whale shark seen from above, drawn to the proportions of a reference photo. Sunlight comes down through the surface in a net of caustics that drifts over its back, and the water swallows it with depth.</sub></td>
-  </tr>
-</table>
-
 ## What it makes
 
 | Size | What it is | Example |
@@ -228,6 +230,7 @@ Each example is a `scene.mjs` (the model and the surfaces) and a `build.mjs` tha
 | [`blackhole`](examples/blackhole) | A Schwarzschild black hole and its accretion disk, mezzotint: every cell a photon traced along its true bent path, the far side of the disk lensed over and under the shadow, the gas Doppler-boosted and shearing as it orbits, after Jean-Pierre Luminet's 1979 image. | `node examples/blackhole/build.mjs` |
 | [`ranges`](examples/ranges) | Range behind range of the Alps from a ridged-multifractal heightfield, mezzotint: snowfields above the snowline, fog in the valleys, the evening sun sinking until only the summits keep the light. The reference for landscape from noise. | `node examples/ranges/build.mjs` |
 | [`whaleshark`](examples/whaleshark) | A whale shark seen from above in dark water, fitted to a reference photo (kept local, not in the repo), mezzotint: caustics drifting over its back, the water swallowing it with depth. `--bare` drops the frame. | `node examples/whaleshark/build.mjs` |
+| [`ship42`](examples/ship42) | The nose of Starship's Ship 42 close up, fitted to a reference photo (kept local, not in the repo), mezzotint: heat-shield tiles, bare steel and the folded flap cast onto the 3D hull, the light swinging round it. | `node examples/ship42/build.mjs` |
 | [`satellite`](examples/satellite) | A geostationary satellite whose wings track the sun through a day over the Earth's limb. The reference for moving parts on a lit body and night-side shading. | `node examples/satellite/build.mjs` |
 | [`kukulcan`](examples/kukulcan) | El Castillo at Chichén Itzá on the spring equinox: nine terraces, four stairs of 91 steps, turned 17° off the compass. Late in the afternoon the terrace corners cast a sawtooth on the north stair's balustrade, and the triangles of light form the serpent coming down to its carved head. The reference for an effect that comes from the shadow map alone. | `node examples/kukulcan/build.mjs` |
 | [`chandbaori`](examples/chandbaori) | The Chand Baori stepwell at Abhaneri seen from its rim: 13 storeys of zigzag steps, built procedurally down to every tread, falling 20 m to green water below a pavilion of galleries and balconies. The rim's shadow and each step's own shadow sweep the terraces through a day at 27° N. The reference for repetitive geometry and exact small shadows. | `node examples/chandbaori/build.mjs` |
@@ -246,7 +249,7 @@ draw-beautiful/
 │   └── plate.mjs       the artboard: guilloche frame, title tablet, paper and plate mark, themes
 ├── references/         craft.md (the engraver's vocabulary), kit.md (API), verify.md (checks)
 ├── scripts/            capture.mjs, drive.mjs, pdf.mjs (headless Chrome), inline.mjs (standalone pages)
-└── examples/           thirty-one complete plates
+└── examples/           thirty-two complete plates
 ```
 
 ## Requirements

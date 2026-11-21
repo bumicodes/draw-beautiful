@@ -23,9 +23,9 @@ launch-videos/
 
 # Reference photos we have no right to redistribute: kept locally for --overlay only
 examples/whaleshark/reference.png
+examples/ship42/reference.png
 
-# Not ours to publish: SpaceX Ship 42 scenes, kept locally
-examples/ship42/
+# Not published: the Ship 42 pad scene, kept locally
 examples/starship/
 
 # Left out of the published skill, kept locally
